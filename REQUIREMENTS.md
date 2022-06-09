@@ -12,7 +12,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - [OPTIONAL] Products by category (args: product category)
 
 #### Users
-- Index [token required] usersRoute.get('/users', verifyAuthToken, httpGetUsers);
+- Index [token required] usersRoute.get('/users', httpGetUsers);
 - Show [token required] usersRoute.get('/users/:id', verifyAuthToken, httpGetUserById);
 - Create N[token required] usersRoute.post('/users',verifyAuthToken, httpCreateNewUser);
 

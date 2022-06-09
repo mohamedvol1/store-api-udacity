@@ -4,7 +4,7 @@ import { httpCreateNewUser, httpGetUserById, httpGetUsers } from './users.contro
 
 const usersRoute = express.Router();
 
-usersRoute.post('/users',verifyAuthToken, httpCreateNewUser);
+usersRoute.post('/users',httpCreateNewUser);
 usersRoute.get('/users', verifyAuthToken, httpGetUsers);
 usersRoute.get('/users/:id', verifyAuthToken, httpGetUserById);
 
