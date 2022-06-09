@@ -4,9 +4,10 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "node src/server.ts",
+    "start": "node build/server.js",
     "watch": "tsc-watch --outDir ./build --onSuccess \"node ./build/server.js\"",
     "test_db": "db-migrate --env test up && npm run tsc && jasmine && db-migrate --env test reset",
+    "migrations": "db-migrate --env test up",
     "test": " npx dotenv -v ENV=test npm run test_db",
     "tsc": "tsc"
   },
