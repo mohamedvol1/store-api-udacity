@@ -14,36 +14,36 @@ before you run the app localy upu need to do some steps first
 
 - add a .env file at your root directory which will be like next.
   
-PG_HOST=<your_host>
-PG_USER=<database_user>
-PG_DATABASE=<database_name_for_dev>
-PG_DATABASE_TEST=<database_name_for_test>
-PG_PASSWORD=<database_password>
-PG_PORT=<database_port>
-ENV=dev
-TOKEN_SECRET=<secret_key_for_tokens>
-SALT_ROUNDS=<number_of_salt_rounds>
-BCRYPT_PASSWORD=<your_pepper>
+PG_HOST=<your_host>  
+PG_USER=<database_user>  
+PG_DATABASE=<database_name_for_dev>  
+PG_DATABASE_TEST=<database_name_for_test>  
+PG_PASSWORD=<database_password>  
+PG_PORT=<database_port>   
+ENV=dev   
+TOKEN_SECRET=<secret_key_for_tokens>    
+SALT_ROUNDS=<number_of_salt_rounds>   
+BCRYPT_PASSWORD=<your_pepper>    
 
 Notice:- PG_DATABASE and PG_DATABASE_TEST are thre name of the databases that you created at the  previous step
 
 
 - then add database.json file at root directory for migration which will be like this.
   
-  {
-	"dev": {
-		"driver": "pg",
-		"user": { "ENV": "PG_USER" },
-		"password": { "ENV": "PG_PASSWORD" },
-		"host": { "ENV": "PG_HOST" },
-		"database": { "ENV": "PG_DATABASE" } 
+  {  
+	"dev": {  
+		"driver": "pg",   
+		"user": { "ENV": "PG_USER" },   
+		"password": { "ENV": "PG_PASSWORD" },   
+		"host": { "ENV": "PG_HOST" },   
+		"database": { "ENV": "PG_DATABASE" }   
 	},
-	"test": {
-		"driver": "pg",
-		"user": { "ENV": "PG_USER" },
-		"password": { "ENV": "PG_PASSWORD" },
-		"host": { "ENV": "PG_HOST" },
-		"database": { "ENV": "PG_DATABASE_TEST" }
+	"test": {  
+		"driver": "pg",   
+		"user": { "ENV": "PG_USER" },   
+		"password": { "ENV": "PG_PASSWORD" },   
+		"host": { "ENV": "PG_HOST" },   
+		"database": { "ENV": "PG_DATABASE_TEST" }   
 	}
 }
 
