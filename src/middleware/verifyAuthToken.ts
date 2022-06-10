@@ -6,7 +6,6 @@ async function verifyAuthToken(req: express.Request, res: express.Response, next
 		const authHeader = (req.headers.authorization as unknown) as string;
 		const token = (authHeader.split(' ')[1] as unknown) as string;
 		const resolved = jwt.verify(token, process.env.TOKEN_SECRET as string) as JwtPayload;
-		console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<', resolved.user)
 
 		next();
 	} catch (error) {
