@@ -9,43 +9,57 @@ before you run the app localy upu need to do some steps first
 
 - create a development database 
 - create another database for testing
+- then to connect to your database just fil the configuration of your databases in .env file as mentioned in ENV setup below.
+- to set the app to your database port put assign database port number (default 5432) to `PG_PORT` in .env file 
+- assing your database password to `PG_PASSWORD`
+- assing your database host to `PG_HOST`
+- assing your development database name to `PG_DATABSE`
+- assing your testing database name to `PG_DATABSE_TEST`
+
+__Notice:- the app runs on port 5000, if you want to change it change from server.ts and assign wanted port number to `const PORT: Number = <your_port>`__ 
 
 ## Env Setup
 
 - add a .env file at your root directory which will be like next.
-  
-PG_HOST=<your_host>  
-PG_USER=<database_user>  
-PG_DATABASE=<database_name_for_dev>  
-PG_DATABASE_TEST=<database_name_for_test>  
-PG_PASSWORD=<database_password>  
-PG_PORT=<database_port>   
-ENV=dev   
-TOKEN_SECRET=<secret_key_for_tokens>    
-SALT_ROUNDS=<number_of_salt_rounds>   
-BCRYPT_PASSWORD=<your_pepper>    
+
+ \\.env
+  	
+	PG_HOST=<your_host>  
+	PG_USER=<database_user>  
+	PG_DATABASE=<database_name_for_dev>  
+	PG_DATABASE_TEST=<database_name_for_test>  
+	PG_PASSWORD=<database_password>  
+	PG_PORT=<database_port>   
+	ENV=dev   
+	TOKEN_SECRET=<secret_key_for_tokens>    
+	SALT_ROUNDS=<number_of_salt_rounds>   
+	BCRYPT_PASSWORD=<your_pepper>    
 
 Notice:- PG_DATABASE and PG_DATABASE_TEST are thre name of the databases that you created at the  previous step
 
 
 - then add database.json file at root directory for migration which will be like this.
-  
-  {  
-	"dev": {  
-		"driver": "pg",   
-		"user": { "ENV": "PG_USER" },   
-		"password": { "ENV": "PG_PASSWORD" },   
-		"host": { "ENV": "PG_HOST" },   
-		"database": { "ENV": "PG_DATABASE" }   
-	},
-	"test": {  
-		"driver": "pg",   
-		"user": { "ENV": "PG_USER" },   
-		"password": { "ENV": "PG_PASSWORD" },   
-		"host": { "ENV": "PG_HOST" },   
-		"database": { "ENV": "PG_DATABASE_TEST" }   
+
+Notice! these varaibles from .env file so you dont need to update on the if did the previos steps.
+
+\\database.json
+
+	  {  
+		"dev": {  
+			"driver": "pg",   
+			"user": { "ENV": "PG_USER" },   
+			"password": { "ENV": "PG_PASSWORD" },   
+			"host": { "ENV": "PG_HOST" },   
+			"database": { "ENV": "PG_DATABASE" }   
+		},
+		"test": {  
+			"driver": "pg",   
+			"user": { "ENV": "PG_USER" },   
+			"password": { "ENV": "PG_PASSWORD" },   
+			"host": { "ENV": "PG_HOST" },   
+			"database": { "ENV": "PG_DATABASE_TEST" }   
+		}
 	}
-}
 
 Note:- dev for migrations on development database and test for testing database
 
