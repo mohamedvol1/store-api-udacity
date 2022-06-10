@@ -15,7 +15,7 @@ async function httpCreateNewUser(req: express.Request, res: express.Response) {
 	try {
 		const userPool = new Users();
 		const newUser = await userPool.createUser(user);
-		var token = jwt.sign({ user: newUser }, process.env.TOKEN_SECRET as string);
+		const token = jwt.sign({ user: newUser }, process.env.TOKEN_SECRET as string);
 		return res.json(token);
 	} catch (err) {
 		throw Error(`Couldn't create a user: ${err}`);

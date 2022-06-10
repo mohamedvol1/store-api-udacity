@@ -5,24 +5,22 @@ import bcrypt from 'bcrypt';
 import pool from '../../database';
 import supertest from 'supertest';
 import app from '../../server';
+import createTestToken from '../test_token';
 
 const request = supertest(app);
 
 const userPool = new Users();
 
+const token = createTestToken();
+
 describe('Users Model', () => {
-	beforeAll(() => {
-		pool.query('DELETE FROM users WHERE user_id=1');
-		pool.query('ALTER SEQUENCE users_user_id_seq RESTART WITH 1');
+	beforeAll(async () => {
+		await pool.query('DELETE FROM users WHERE user_id=1');
+		await pool.query('ALTER SEQUENCE users_user_id_seq RESTART WITH 1');
 	});
 
 	// endpoint testing
-	it("GET /users endpoint should respond with 'invalid token' message", async () => {
-		const res = await request.get('/users');
-		expect(res.body).toEqual('invalid token');
-	});
-
-	it('POST /users endpoint should add a user', async () => {
+	it('POST /users endpoint should add a user and respond with 200 status code', async () => {
 		const res = await request
 			.post('/users')
 			.send({
@@ -31,16 +29,21 @@ describe('Users Model', () => {
 				password: '1234'
 			})
 			.set('Accept', 'application/json');
+
 		expect(res.status).toEqual(200);
 
-		// reeseting users table after request
-		pool.query('DELETE FROM users WHERE user_id=1');
-		pool.query('ALTER SEQUENCE users_user_id_seq RESTART WITH 1');
+		await pool.query('DELETE FROM users WHERE user_id=1');
+		await pool.query('ALTER SEQUENCE users_user_id_seq RESTART WITH 1');
 	});
 
-	it("GET /users/:id endpoint should respond with 'invalid token' message", async () => {
-		const res = await request.get('/users/1');
-		expect(res.body).toEqual('invalid token');
+	it('GET /users endpoint should respond with 200 status code', async () => {
+		const res = await request.get('/users').set('Authorization', 'bearer ' + token);
+		expect(res.status).toEqual(200);
+	});
+
+	it('GET /users/:id endpoint should respond with 200 status code', async () => {
+		const res = await request.get('/users/1').set('Authorization', 'bearer ' + token);
+		expect(res.status).toEqual(200);
 	});
 
 	it('should have an getAllUsers method', () => {
@@ -93,8 +96,9 @@ describe('Users Model', () => {
 			last_name: 'user'
 		});
 	});
-	afterAll(() => {
-		pool.query('DELETE FROM users WHERE user_id=1');
-		pool.query('ALTER SEQUENCE users_user_id_seq RESTART WITH 1');
+
+	afterAll(async () => {
+		await pool.query('DELETE FROM users WHERE user_id=1');
+		await pool.query('ALTER SEQUENCE users_user_id_seq RESTART WITH 1');
 	});
 });

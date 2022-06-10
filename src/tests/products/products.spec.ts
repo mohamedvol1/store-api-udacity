@@ -3,19 +3,27 @@ import { Product, Products } from '../../models/products/product.model';
 
 import supertest from 'supertest';
 import app from '../../server';
+import createTestToken from '../test_token';
 
 const request = supertest(app);
 
 const productPool = new Products();
 
+const token = createTestToken();
+
 describe('Products Model', () => {
+	beforeAll(async () => {
+		// make sure the primary key is at 1 for produscts table
+		await pool.query('ALTER SEQUENCE products_product_id_seq RESTART WITH 1');;
+	});
+
 	// endpoint testing
 	it('GET /products endpoint should respond with empty list', async () => {
 		const res = await request.get('/products');
 		expect(res.body).toEqual([]);
 	});
 
-	it("POST /products endpoint should respond with 'invalid token' message", async () => {
+	it('POST /products endpoint should respond 200 status code', async () => {
 		const res = await request
 			.post('/products')
 			.send({
@@ -23,17 +31,18 @@ describe('Products Model', () => {
 				price: 100,
 				category: 'furniture'
 			})
-			.set('Accept', 'application/json');
-		expect(res.body).toEqual('invalid token');
+			.set('Accept', 'application/json')
+			.set('Authorization', 'bearer ' + token);
+		expect(res.status).toEqual(200);
 
 		// reseting products table
-		pool.query('DELETE FROM products WHERE product_id=1');
-		pool.query('ALTER SEQUENCE products_product_id_seq RESTART WITH 1');
+		await pool.query('DELETE FROM products WHERE product_id=1');
+		await pool.query('ALTER SEQUENCE products_product_id_seq RESTART WITH 1');
 	});
 
 	it('GET /products/:id endpoint should respond with 401 status code', async () => {
-		const res = await request.get('/users/1');
-		expect(res.status).toEqual(401);
+		const res = await request.get('/products/1');
+		expect(res.status).toEqual(200);
 	});
 
 	it('should have an getAllProducts method', () => {
@@ -90,8 +99,9 @@ describe('Products Model', () => {
 		});
 	});
 
-	afterAll(() => {
-		pool.query('DELETE FROM products WHERE product_id=1');
-		pool.query('ALTER SEQUENCE products_product_id_seq RESTART WITH 1');
+	afterAll(async() => {
+		// reseting products table
+		await pool.query('DELETE FROM products WHERE product_id=1');
+		await pool.query('ALTER SEQUENCE products_product_id_seq RESTART WITH 1');
 	});
 });
