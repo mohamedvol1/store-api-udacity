@@ -11,10 +11,10 @@ before you run the app localy you need to do some steps first
 - create another database for testing
 - then to connect to your database just fil the configuration of your databases in .env file as mentioned in ENV setup below.
 - to set the app to your database port put assign database port number (default 5432) to `PG_PORT` in .env file 
-- assing your database password to `PG_PASSWORD`
-- assing your database host to `PG_HOST`
-- assing your development database name to `PG_DATABSE`
-- assing your testing database name to `PG_DATABSE_TEST`
+- assign your database password to `PG_PASSWORD`
+- assign your database host to `PG_HOST`
+- assign your development database name to `PG_DATABSE`
+- assign your testing database name to `PG_DATABSE_TEST`
 
 __Notice:- the app runs on port 5000, if you want to change it change from server.ts and assign wanted port number to `const PORT: Number = <your_port>`__ 
 
