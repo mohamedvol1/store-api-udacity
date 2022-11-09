@@ -3,7 +3,7 @@ an APi for a store web app
 
 # SETUP
 
-before you run the app localy upu need to do some steps first
+before you run the app localy you need to do some steps first
 
 ## Database Setup
 
